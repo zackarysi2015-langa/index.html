@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="QUANTIX — Des outils de calcul gratuits, simples et rapides.">
+<title>QUANTIX — Smart Tools</title>
+<style>
+:root{--bg:#070b16;--panel:#101a2d;--panel2:#0c1425;--blue:#278cff;--cyan:#48d9ff;--text:#edf5ff;--muted:#9aacc5;--line:#1d3150}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -20%,#12366b 0%,transparent 48%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+header{border-bottom:1px solid var(--line);background:#070b16dd;position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.nav{max-width:1120px;margin:auto;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-size:25px;font-weight:900;letter-spacing:3px;color:white}.logo span{color:var(--cyan)}
+.tag{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:3px}
+.status{font-size:12px;color:#79e4b0;border:1px solid #225b4b;padding:7px 11px;border-radius:30px}
+main{max-width:1120px;margin:auto;padding:48px 22px 70px}
+.hero{text-align:center;padding:20px 0 35px}
+.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:3px;font-weight:800}
+h1{font-size:clamp(38px,7vw,68px);margin:14px 0 10px;letter-spacing:-2px}
+h1 span{color:var(--cyan);text-shadow:0 0 30px #278cff70}
+.hero p{color:var(--muted);font-size:16px;line-height:1.6;max-width:570px;margin:0 auto}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:22px auto 25px}
+.tab{background:var(--panel2);border:1px solid var(--line);color:var(--muted);padding:11px 15px;border-radius:10px;cursor:pointer;font-weight:700}
+.tab:hover,.tab.active{background:#123568;border-color:var(--blue);color:white;box-shadow:0 0 18px #278cff25}
+.tool{display:none;max-width:760px;margin:0 auto;background:linear-gradient(145deg,#111f36,#0c1425);border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 18px 55px #0005}
+.tool.active{display:block}
+.tool h2{margin:0 0 6px;font-size:23px}.sub{color:var(--muted);font-size:14px;margin:0 0 22px}
+label{display:block;font-size:13px;color:#c3d3e8;margin:13px 0 7px}
+input,select{width:100%;background:#080f1d;border:1px solid #29405f;border-radius:9px;color:white;padding:12px 13px;font-size:16px;outline:none}
+input:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #48d9ff18}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+button.action{background:linear-gradient(100deg,#1676e9,#27b7f2);border:0;color:white;font-size:15px;font-weight:800;padding:12px 18px;border-radius:9px;cursor:pointer;margin-top:17px}
+button.action:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.result{margin-top:17px;padding:15px;background:#08182b;border:1px solid #1c4773;border-radius:10px;color:#cdeaff;min-height:48px;line-height:1.5;overflow-wrap:anywhere}
+.result strong{color:white;font-size:21px}
+.calc{max-width:340px;margin:auto}
+.calc-display{width:100%;font-size:28px;text-align:right;padding:17px;margin-bottom:12px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.keys button{padding:17px 5px;border:1px solid var(--line);background:#14243b;color:white;border-radius:9px;font-size:18px;cursor:pointer}
+.keys button:hover{background:#1b3d68}.keys .op{color:var(--cyan)}.keys .equal{background:#147ee9;border-color:#147ee9}
+footer{text-align:center;color:#71849f;border-top:1px solid var(--line);padding:24px;font-size:12px}
+@media(max-width:600px){main{padding-top:30px}.tool{padding:18px}.grid{grid-template-columns:1fr}.nav{padding:14px 16px}.status{font-size:10px}.tab{font-size:12px;padding:10px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div><div class="logo">QUAN<span>TIX</span></div><div class="tag">SMART TOOLS · SIMPLE SOLUTIONS</div></div><div class="status">● OUTILS GRATUITS</div></div></header>
+<main>
+<section class="hero"><div class="eyebrow">BIENVENUE DANS TON ESPACE DE CALCUL</div><h1>Calcule. <span>Comprends.</span> Avance.</h1><p>Tous les outils essentiels au même endroit. Choisis un outil et commence à calculer gratuitement.</p></section>
+<nav class="tabs" aria-label="Outils QUANTIX">
+<button class="tab active" data-tab="calc">🧮 Calculatrice</button>
+<button class="tab" data-tab="prob">🎲 Probabilités</button>
+<button class="tab" data-tab="convert">🔄 Convertisseur</button>
+<button class="tab" data-tab="percent">📊 Pourcentage</button>
+<button class="tab" data-tab="average">📚 Moyenne</button>
+</nav>
+<section class="tool active" id="calc"><h2>🧮 Calculatrice</h2><p class="sub">Effectue tes opérations de base.</p><div class="calc"><input id="display" class="calc-display" value="0" readonly aria-label="Affichage de la calculatrice"><div class="keys">
+<button data-key="C" class="op">C</button><button data-key="(">(</button><button data-key=")">)</button><button data-key="/" class="op">÷</button>
+<button data-key="7">7</button><button data-key="8">8</button><button data-key="9">9</button><button data-key="*" class="op">×</button>
+<button data-key="4">4</button><button data-key="5">5</button><button data-key="6">6</button><button data-key="-" class="op">−</button>
+<button data-key="1">1</button><button data-key="2">2</button><button data-key="3">3</button><button data-key="+" class="op">+</button>
+<button data-key="0">0</button><button data-key=".">.</button><button data-key="back">⌫</button><button data-key="=" class="equal">=</button>
+</div></div><div class="result" id="calcResult" aria-live="polite">Prêt à calculer.</div></section>
+<section class="tool" id="prob"><h2>🎲 Calculateur de probabilités</h2><p class="sub">Calcule la chance qu'un événement se produise.</p><div class="grid"><div><label for="fav">Nombre de cas favorables</label><input id="fav" type="number" min="0" step="any" placeholder="Ex. 2"></div><div><label for="total">Nombre de cas possibles</label><input id="total" type="number" min="1" step="any" placeholder="Ex. 10"></div></div><button class="action" id="probBtn">Calculer la probabilité</button><div class="result" id="probResult" aria-live="polite">Entre les deux nombres pour commencer.</div></section>
+<section class="tool" id="convert"><h2>🔄 Convertisseur</h2><p class="sub">Convertis des longueurs, masses ou températures.</p><label for="category">Catégorie</label><select id="category"><option value="length">Longueur</option><option value="mass">Masse</option><option value="temp">Température</option></select><div class="grid"><div><label for="from">De</label><select id="from"></select></div><div><label for="to">Vers</label><select id="to"></select></div></div><label for="convertValue">Valeur à convertir</label><input id="convertValue" type="number" step="any" placeholder="Ex. 10"><button class="action" id="convertBtn">Convertir</button><div class="result" id="convertResult" aria-live="polite">Choisis les unités et une valeur.</div></section>
+<section class="tool" id="percent"><h2>📊 Calculateur de pourcentage</h2><p class="sub">Trouve X % d'un nombre.</p><div class="grid"><div><label for="pct">Pourcentage (%)</label><input id="pct" type="number" step="any" placeholder="Ex. 15"></div><div><label for="base">Nombre</label><input id="base" type="number" step="any" placeholder="Ex. 200"></div></div><button class="action" id="pctBtn">Calculer</button><div class="result" id="pctResult" aria-live="polite">Exemple : 15 % de 200 = 30.</div></section>
+<section class="tool" id="average"><h2>📚 Calculateur de moyenne</h2><p class="sub">Entre tes notes séparées par des virgules.</p><label for="grades">Tes notes</label><input id="grades" type="text" placeholder="Ex. 80, 75, 92, 88"><button class="action" id="avgBtn">Calculer ma moyenne</button><div class="result" id="avgResult" aria-live="polite">Entre au moins deux notes pour commencer.</div></section>
+</main>
+<footer>© <span id="year"></span> QUANTIX · Des outils simples, gratuits et utiles.</footer>
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));
+ document.querySelectorAll('.tool').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));
+}));
+const display=$('display');
+function calcKey(k){
+ if(k==='C'){display.value='0';$('calcResult').textContent='Calcul effacé.';return}
+ if(k==='back'){display.value=display.value.length>1?display.value.slice(0,-1):'0';return}
+ if(k==='='){
+  try{
+   const expr=display.value;
+   if(!/^[0-9+*/().\s-]+$/.test(expr))throw Error();
+   const val=Function('"use strict";return ('+expr+')')();
+   if(!Number.isFinite(val))throw Error();
+   display.value=String(Number(val.toFixed(10)));$('calcResult').innerHTML='Résultat : <strong>'+display.value+'</strong>';
+  }catch(e){$('calcResult').textContent='Oups ! Vérifie ton opération.'}
+  return;
+ }
+ display.value=display.value==='0'&&!['.','+','-','*','/','('].includes(k)?k:display.value+k;
+}
+document.querySelectorAll('[data-key]').forEach(b=>b.addEventListener('click',()=>calcKey(b.dataset.key)));
+$('probBtn').addEventListener('click',()=>{
+ const f=Number($('fav').value),t=Number($('total').value);
+ if($('fav').value===''||$('total').value===''||!Number.isFinite(f)||!Number.isFinite(t)||t<=0||f<0||f>t){$('probResult').textContent='Entre des nombres valides : les cas favorables doivent être entre 0 et le total.';return}
+ const p=f/t*100;$('probResult').innerHTML='Probabilité : <strong>'+p.toLocaleString('fr-CA',{maximumFractionDigits:6})+' %</strong><br>Soit '+f+' cas favorable(s) sur '+t+'.';
+});
+const units={
+ length:{mm:0.001,cm:0.01,m:1,km:1000,in:0.0254,ft:0.3048},
+ mass:{mg:0.001,g:1,kg:1000,t:1000000,lb:453.59237},
+ temp:{'°C':1,'°F':1,'K':1}
+};
+const labels={mm:'Millimètres (mm)',cm:'Centimètres (cm)',m:'Mètres (m)',km:'Kilomètres (km)',in:'Pouces (in)',ft:'Pieds (ft)',mg:'Milligrammes (mg)',g:'Grammes (g)',kg:'Kilogrammes (kg)',t:'Tonnes (t)',lb:'Livres (lb)','°C':'Celsius (°C)','°F':'Fahrenheit (°F)','K':'Kelvin (K)'};
+function fillUnits(){
+ const cat=$('category').value,keys=Object.keys(units[cat]);
+ ['from','to'].forEach((id,i)=>{$(id).innerHTML=keys.map(k=>'<option value="'+k+'">'+labels[k]+'</option>').join('');$(id).value=keys[i===0?0:Math.min(1,keys.length-1)]});
+}
+$('category').addEventListener('change',fillUnits);fillUnits();
+$('convertBtn').addEventListener('click',()=>{
+ const v=Number($('convertValue').value),a=$('from').value,b=$('to').value,cat=$('category').value;
+ if($('convertValue').value===''||!Number.isFinite(v)){$('convertResult').textContent='Entre une valeur valide.';return}
+ let out;
+ if(cat==='temp'){
+  let c=a==='°C'?v:a==='°F'?(v-32)*5/9:v-273.15;
+  out=b==='°C'?c:b==='°F'?c*9/5+32:c+273.15;
+ }else out=v*units[cat][a]/units[cat][b];
+ $('convertResult').innerHTML='<strong>'+out.toLocaleString('fr-CA',{maximumFractionDigits:8})+' '+b+'</strong>';
+});
+$('pctBtn').addEventListener('click',()=>{
+ const p=Number($('pct').value),b=Number($('base').value);
+ if($('pct').value===''||$('base').value===''||!Number.isFinite(p)||!Number.isFinite(b)){$('pctResult').textContent='Entre deux nombres valides.';return}
+ const r=p/100*b;$('pctResult').innerHTML=p+' % de '+b+' = <strong>'+r.toLocaleString('fr-CA',{maximumFractionDigits:8})+'</strong>';
+});
+$('avgBtn').addEventListener('click',()=>{
+ const raw=$('grades').value.trim();
+ const nums=raw.split(/[;, ]+/).filter(Boolean).map(x=>Number(x.replace(',','.')));
+ if(!raw||nums.length<1||nums.some(x=>!Number.isFinite(x))){$('avgResult').textContent='Entre des notes valides, séparées par des virgules.';return}
+ const avg=nums.reduce((a,b)=>a+b,0)/nums.length;
+ $('avgResult').innerHTML='Ta moyenne est : <strong>'+avg.toLocaleString('fr-CA',{maximumFractionDigits:2})+' / 100</strong><br>Nombre de notes : '+nums.length+'.';
+});
+$('year').textContent=new Date().getFullYear();
+</script>
+</body></html>
